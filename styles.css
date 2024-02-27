@@ -1,0 +1,17 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    margin: 0;
+    overflow: hidden;
+  }
+  
+  .box {
+    display: block;
+    height: 20vh;
+    width: 10vw;
+    background-color: green;
+  }
+
+  
