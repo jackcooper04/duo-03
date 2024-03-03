@@ -19,15 +19,15 @@ function randomNum(min, max) {
     return Math.floor(Math.random() * (max - min)) + min; // You can remove the Math.floor if you don't want it to be an integer
 }
 
-function generateQuestions(questionCount, constraints) {
+function generateQuestions(questionCount, tables) {
     var questions = new Array();
     var order = 1;
     for (i = 0; i < questionCount; i++) {
-        if (!constraints) {
-            constraints = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        if (!tables || tables.length == 0) {
+            tables = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
         };
         var firstInt = randomNum(1, 12);
-        var secondInt = constraints[randomNum(0, constraints.length)];
+        var secondInt = tables[randomNum(0, tables.length)];
         var answer = firstInt * secondInt;
         if (order == 1) {
             var string = `${firstInt} * ${secondInt}`
@@ -65,14 +65,18 @@ function retreiveGameData() {
     return parsed;
 };
 
-function startGame(questions) {
+function startGame(questionCount, tables, timeLimit) {
     // Check for active game (ensures no multi games) and allows restore
     if (checkForActiveGames()) {
         console.log('Reload!')
         active_gameData = retreiveGameData();
-    } else {       
+    } else {
+        if (!tables) {
+            tables = []
+        };
+        var questions = generateQuestions(questionCount,tables);       
         var gameData = {
-            timeAlloted:DEFAULT_GAME_TIME,
+            timeAlloted:timeLimit || DEFAULT_GAME_TIME,
             score:0,
             questions:questions
         };
@@ -80,15 +84,41 @@ function startGame(questions) {
         storeGameData(gameData);
     }
 };
-//mC452fAyHL
+
 function activateQuestion(id) {
     index = active_gameData.questions.findIndex(x => x.id === id);
-    console.log(active_gameData.questions[index])
-}
+    if (index >= 0) {
+        active_gameData.questions[index].active = true;
+        storeGameData(active_gameData);
+    } else {
+        console.log('no question')
+    }
+};
+
+function deactivateQuestion(id) {
+    index = active_gameData.questions.findIndex(x => x.id === id);
+    if (index >= 0) {
+        active_gameData.questions[index].active = false;
+        storeGameData(active_gameData);
+    } else {
+        console.log('no question')
+    }
+};
+
 
 //localStorage.clear();
 
 
 console.log('Engine Activated')
-startGame();
-activateQuestion('mC452fAyHL')
+startGame(5,[]);
+setTimeout(function(){
+    activateQuestion('5toM0N7fUz');
+}, 2000);
+setTimeout(function(){
+    deactivateQuestion('5toM0N7fUz');
+}, 4000);
+setTimeout(function(){
+    console.log(retreiveGameData())
+}, 6000);
+
+ 
