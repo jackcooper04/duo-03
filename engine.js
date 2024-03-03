@@ -1,3 +1,6 @@
+const DEFAULT_POINT_VALUE = 5;
+const DEFAULT_GAME_TIME = 10000;
+
 
 const makeid = (length) => {
     var result = '';
@@ -49,15 +52,15 @@ function generateQuestions(questionCount, constraints) {
 };
 
 function checkForActiveGames() {
-    return localStorage.getItem('activeGame') || false;
+    return localStorage.getItem('gameData') || false;
 };
 
 function storeGameData(questions) {
-    localStorage.setItem('questions',CryptoJS.AES.encrypt(JSON.stringify(questions), "noanswersforyou"))
+    localStorage.setItem('gameData',CryptoJS.AES.encrypt(JSON.stringify(questions), "noanswersforyou"))
 }
 
 function retreiveGameData() {
-    var decrypted = CryptoJS.AES.decrypt(localStorage.getItem('questions'), "noanswersforyou");
+    var decrypted = CryptoJS.AES.decrypt(localStorage.getItem('gameData'), "noanswersforyou");
     var parsed = JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
     return parsed;
 };
@@ -65,22 +68,27 @@ function retreiveGameData() {
 function startGame(questions) {
     // Check for active game (ensures no multi games) and allows restore
     if (checkForActiveGames()) {
-        //Restore Game returning false for now
-        return false;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
-        
+        console.log('Reload!')
+        active_gameData = retreiveGameData();
     } else {       
         var gameData = {
-            timeAlloted:10000,
+            timeAlloted:DEFAULT_GAME_TIME,
+            score:0,
             questions:questions
         };
         active_gameData = gameData;
         storeGameData(gameData);
-        //localStorage.setItem('activeGame',true);
     }
 };
+//mC452fAyHL
+function activateQuestion(id) {
+    index = active_gameData.questions.findIndex(x => x.id === id);
+    console.log(active_gameData.questions[index])
+}
 
-localStorage.clear();
+//localStorage.clear();
 
 
 console.log('Engine Activated')
-startGame(generateQuestions(20, [2]));
+startGame();
+activateQuestion('mC452fAyHL')
