@@ -7,11 +7,15 @@ body {
     overflow: hidden;
   }
   
-  .box {
-    display: block;
-    height: 20vh;
+  .questionObj {
+    display: flex;
+    height: 10vw;
     width: 10vw;
     background-color: green;
+    font-size: 3vh;
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
   }
 
   
