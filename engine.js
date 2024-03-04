@@ -56,13 +56,15 @@ function checkForActiveGames() {
 };
 
 function storeGameData(questions) {
-    localStorage.setItem('gameData',CryptoJS.AES.encrypt(JSON.stringify(questions), "noanswersforyou"))
+    //localStorage.setItem('gameData',CryptoJS.AES.encrypt(JSON.stringify(questions), "noanswersforyou"))
+    localStorage.setItem('gameData',JSON.stringify(questions));
+
 }
 
 function retreiveGameData() {
     var decrypted = CryptoJS.AES.decrypt(localStorage.getItem('gameData'), "noanswersforyou");
-    var parsed = JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
-    return parsed;
+    //var parsed = JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
+    return JSON.parse(localStorage.getItem('gameData'));
 };
 
 function startGame(questionCount, tables, timeLimit) {
@@ -105,20 +107,34 @@ function deactivateQuestion(id) {
     }
 };
 
-
-//localStorage.clear();
-
+function receiveAnswer(number) {
+    var indexes = active_gameData.questions.map((elm, idx) => elm.answer == number && elm.active ? idx : '').filter(String);
+    for (idx in indexes) {
+        // Prevent multiple "point redemptions"
+        if (!active_gameData.questions[indexes[idx]].correct) {
+            active_gameData.questions[indexes[idx]].correct = true;
+            active_gameData.questions[indexes[idx]].active = false;
+            // Trigger Score Add
+        };
+    };
+    storeGameData(active_gameData);
+};
 
 console.log('Engine Activated')
-startGame(5,[]);
+startGame(22,[2]);
 setTimeout(function(){
-    activateQuestion('5toM0N7fUz');
+    receiveAnswer(16)
+    // activateQuestion('J6XGJa4lHS');
+    // activateQuestion('PpBPlfUAaW');
+    // activateQuestion('BgEbCdn0i4');
+    // activateQuestion('KixEAO2aFV');
+    // activateQuestion('Kytpgn9N6i');
 }, 2000);
-setTimeout(function(){
-    deactivateQuestion('5toM0N7fUz');
-}, 4000);
-setTimeout(function(){
-    console.log(retreiveGameData())
-}, 6000);
+// setTimeout(function(){
+//     deactivateQuestion('5toM0N7fUz');
+// }, 4000);
+// setTimeout(function(){
+//     console.log(retreiveGameData())
+// }, 6000);
 
  
