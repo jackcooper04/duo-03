@@ -173,3 +173,30 @@ function addScore() {
 
 
 console.log('Engine Activated');
+var chord = -1;
+document.addEventListener("keypress", function onEvent(event) {
+    if (chord == -1) {
+        //Start new Chord
+        if (Number(event.key) || '0'){
+            chord = event.key;
+            startChordDestruction();
+        } else {
+            console.log('nan')
+        }
+    } else {
+        clearTimeout(chordDestruction);
+        chord += event.key
+        startChordDestruction();
+    }
+    console.log(event.key)
+});
+
+function startChordDestruction() {
+    chordDestruction = setTimeout(function(){
+        console.log(Number(chord))
+        receiveAnswer(chord);
+        chord = -1;
+   }, 500);
+}
+
+startGame(10);
