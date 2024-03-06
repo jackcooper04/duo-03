@@ -149,10 +149,18 @@ function receiveAnswer(number) {
         if (!active_gameData.questions[indexes[idx]].correct) {
             active_gameData.questions[indexes[idx]].correct = true;
             active_gameData.questions[indexes[idx]].active = false;
-            // Trigger Score Add
+            addScore();
         };
     };
     storeGameData(active_gameData);
 };
+
+function addScore() {
+    active_gameData.score = active_gameData.score + DEFAULT_POINT_VALUE;
+    storeGameData(active_gameData);
+    // Trigger Score Update
+}
+
+
 
 console.log('Engine Activated');
