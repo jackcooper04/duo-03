@@ -1,13 +1,13 @@
-body {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    min-height: 100vh;
-    margin: 0;
-    overflow: hidden;
-  }
+body{
+  overflow: hidden;
+}
+.game-container{
+  display: flex;
+  overflow: hidden;
+}
   
   .questionObj {
+    position: absolute  ;
     display: flex;
     height: 10vw;
     width: 10vw;
