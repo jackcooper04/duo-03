@@ -1,7 +1,10 @@
 const DEFAULT_POINT_VALUE = 5;
 const DEFAULT_GAME_TIME = 10000;
+var active_gameData = {};
 
 
+
+// Creates Unique ID for question
 const makeid = (length) => {
     var result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -13,13 +16,22 @@ const makeid = (length) => {
     return result;
 }
 
-var active_gameData = {};
 
+// Random Number Generator
 function randomNum(min, max) {
     return Math.floor(Math.random() * (max - min)) + min; // You can remove the Math.floor if you don't want it to be an integer
 }
 
+
+// Function that generates questions
+/*
+REQUIRED questionCount: int
+OPTIONAL tables DEFAULT [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] 
+*/
 function generateQuestions(questionCount, tables) {
+    if (!questionCount) {
+        return false;
+    }
     var questions = new Array();
     var order = 1;
     for (i = 0; i < questionCount; i++) {
@@ -51,23 +63,38 @@ function generateQuestions(questionCount, tables) {
     return questions;
 };
 
+// Checks LocalStorage for Active Game
 function checkForActiveGames() {
     return localStorage.getItem('gameData') || false;
 };
 
+// Stores GameData to localstorage
 function storeGameData(questions) {
     //localStorage.setItem('gameData',CryptoJS.AES.encrypt(JSON.stringify(questions), "noanswersforyou"))
     localStorage.setItem('gameData',JSON.stringify(questions));
 
 }
 
+//Retrives GameData from localstorage
 function retreiveGameData() {
     var decrypted = CryptoJS.AES.decrypt(localStorage.getItem('gameData'), "noanswersforyou");
     //var parsed = JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
     return JSON.parse(localStorage.getItem('gameData'));
 };
 
+//Start Game Function
+/*
+REQUIRED: questionCount
+OPTIONAL: tables DEFAULT [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+OPTIONAL: timeLimit DEFAULT DEFAULT_GAME_TIME
+*/
 function startGame(questionCount, tables, timeLimit) {
+
+    if (!questionCount) {
+        return false;
+    }
+
+
     // Check for active game (ensures no multi games) and allows restore
     if (checkForActiveGames()) {
         console.log('Reload!')
@@ -87,6 +114,8 @@ function startGame(questionCount, tables, timeLimit) {
     }
 };
 
+//Activate Question
+
 function activateQuestion(id) {
     index = active_gameData.questions.findIndex(x => x.id === id);
     if (index >= 0) {
@@ -97,6 +126,8 @@ function activateQuestion(id) {
     }
 };
 
+//Deactivate Question
+
 function deactivateQuestion(id) {
     index = active_gameData.questions.findIndex(x => x.id === id);
     if (index >= 0) {
@@ -106,6 +137,8 @@ function deactivateQuestion(id) {
         console.log('no question')
     }
 };
+
+//Recive Answer
 
 function receiveAnswer(number) {
     var indexes = active_gameData.questions.map((elm, idx) => elm.answer == number && elm.active ? idx : '').filter(String);
@@ -120,21 +153,4 @@ function receiveAnswer(number) {
     storeGameData(active_gameData);
 };
 
-console.log('Engine Activated')
-startGame(22,[2]);
-setTimeout(function(){
-    receiveAnswer(16)
-    // activateQuestion('J6XGJa4lHS');
-    // activateQuestion('PpBPlfUAaW');
-    // activateQuestion('BgEbCdn0i4');
-    // activateQuestion('KixEAO2aFV');
-    // activateQuestion('Kytpgn9N6i');
-}, 2000);
-// setTimeout(function(){
-//     deactivateQuestion('5toM0N7fUz');
-// }, 4000);
-// setTimeout(function(){
-//     console.log(retreiveGameData())
-// }, 6000);
-
- 
+console.log('Engine Activated');
