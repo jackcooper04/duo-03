@@ -99,6 +99,7 @@ function startGame(questionCount, tables, timeLimit) {
     if (checkForActiveGames()) {
         console.log('Reload!')
         active_gameData = retreiveGameData();
+        return active_gameData;
     } else {
         if (!tables) {
             tables = []
@@ -111,6 +112,7 @@ function startGame(questionCount, tables, timeLimit) {
         };
         active_gameData = gameData;
         storeGameData(gameData);
+        return active_gameData;
     }
 };
 
