@@ -116,6 +116,15 @@ function startGame(questionCount, tables, timeLimit) {
     }
 };
 
+function endGame() {
+    // Check if game actually exists
+    if (!checkForActiveGames()) {
+        return false;
+    };
+    localStorage.clear();
+    return active_gameData;
+};
+
 //Activate Question
 
 function activateQuestion(id) {
