@@ -203,4 +203,4 @@ function startChordDestruction() {
         chord = -1;
         //trigger clear
    }, 500);
-};
+}
