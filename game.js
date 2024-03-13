@@ -2,6 +2,8 @@
 const container = document.getElementById('gameContainer');
 var game;
 var questions;
+var questionCount = 5;
+var questionDone = 0;
 var questionObjects = [];
 
 
@@ -67,12 +69,14 @@ function animate(obj){
 function endQuestion(obj){
     obj.className = "hiddenQuestionObj";
     deactivateQuestion(obj.getAttribute("qID"))
+    questionDone++;
 }
 
 
 function play(){
+    
     // Start Game, get questions
-    game = startGame(5); 
+    game = startGame(questionCount);
     questions = game.questions;
 
     // Initialise Each Question Object
@@ -93,12 +97,18 @@ function play(){
             obj = questionObjects[0]
             questionObjects.shift();
             animate(obj);
+            
         }catch(e){
-            console.log("no more questions")
+            // Checks if all questions have finished running and ends game
+            if(questionDone == questionCount){
+                endGame();
+                clearInterval(runQuestions);
+            }
         }
         
     }, 2000)
 
 }
-    
+
+
 play()

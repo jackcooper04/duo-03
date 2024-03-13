@@ -198,5 +198,3 @@ function startChordDestruction() {
         chord = -1;
    }, 500);
 }
-
-startGame(10);
