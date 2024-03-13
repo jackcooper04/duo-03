@@ -4,6 +4,7 @@ var game;
 var questions;
 var questionObjects = [];
 
+
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
@@ -27,8 +28,8 @@ function loadQuestion(question) {
     container.appendChild(newDiv);
 
     return newDiv;
-  }
-  
+}
+
 function animate(obj){
     obj.className = "questionObj";
     level = Number(obj.getAttribute("level"));
@@ -58,16 +59,10 @@ function animate(obj){
 }
 
 function endQuestion(obj){
-    initialise();
-    let questionData = questions.find((question) => question.id = obj.getAttribute('qID'));
     obj.className = "hiddenQuestionObj";
     deactivateQuestion(obj.getAttribute("qID"))
-    if(questionData.correct == false){
-        questionObjects.push(obj);
-        console.log(questionObjects);
-    }
-    
 }
+
 function initialise(){
     game = startGame(20); 
     questions = game.questions;
@@ -86,6 +81,7 @@ function play(){
     
     
 function run(){
+
     runQuestions = setInterval(function(){
         try{
             obj = questionObjects[0]
@@ -93,7 +89,6 @@ function run(){
             animate(obj);
         }catch(e){
             console.log("no more questions")
-            endGame();
         }
         
     }, 2000)
