@@ -72,7 +72,7 @@ function endQuestion(obj){
 
 function play(){
     // Start Game, get questions
-    game = startGame(20); 
+    game = startGame(5); 
     questions = game.questions;
 
     // Initialise Each Question Object
