@@ -121,7 +121,11 @@ function endGame() {
     if (!checkForActiveGames()) {
         return false;
     };
+    var gameData = active_gameData;
     localStorage.clear();
+    var correctAnswers = gameData.questions.map((elm, idx) => elm.correct == true ? idx : '').filter(String)
+    console.log('END GAME');
+    console.log(correctAnswers);
     return active_gameData;
 };
 
@@ -133,7 +137,7 @@ function activateQuestion(id) {
         active_gameData.questions[index].active = true;
         storeGameData(active_gameData);
     } else {
-        console.log('no question')
+        console.log('no question' + id)
     }
 };
 
@@ -168,7 +172,7 @@ function addScore() {
     active_gameData.score = active_gameData.score + DEFAULT_POINT_VALUE;
     storeGameData(active_gameData);
     // Trigger Score Update
-}
+};
 
 
 
@@ -179,6 +183,7 @@ document.addEventListener("keypress", function onEvent(event) {
         //Start new Chord
         if (Number(event.key) || '0'){
             chord = event.key;
+            //trigger number event
             startChordDestruction();
         } else {
             console.log('nan')
@@ -196,7 +201,6 @@ function startChordDestruction() {
         console.log(Number(chord))
         receiveAnswer(chord);
         chord = -1;
+        //trigger clear
    }, 500);
-}
-
-startGame(10);
+};
