@@ -117,10 +117,11 @@ function startGame(questionCount, tables, timeLimit) {
 };
 
 function endGame() {
-    // Check if game actually exists
+    // Check if game actually exis
     if (!checkForActiveGames()) {
         return false;
     };
+    //Execute Kill Function
     var gameData = active_gameData;
     localStorage.clear();
     var correctAnswers = gameData.questions.map((elm, idx) => elm.correct == true ? idx : '').filter(String)
