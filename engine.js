@@ -125,8 +125,13 @@ function endGame() {
     localStorage.clear();
     var correctAnswers = gameData.questions.map((elm, idx) => elm.correct == true ? idx : '').filter(String)
     console.log('END GAME');
-    console.log(correctAnswers);
-    return active_gameData;
+    var actualScore = correctAnswers.length * DEFAULT_POINT_VALUE;
+    var endGameObj = {
+        questions:gameData.questions,
+        score:actualScore,
+        correct: correctAnswers
+    }
+    return endGameObj;
 };
 
 //Activate Question
