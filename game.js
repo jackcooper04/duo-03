@@ -30,12 +30,16 @@ function loadQuestion(question) {
     return newDiv;
 }
 
+
+// Animate Object
 function animate(obj){
     obj.className = "questionObj";
     level = Number(obj.getAttribute("level"));
     let yPos;
     let xPos;
     let endXPos;
+
+    // Set Rendered Level for Question
     switch(level){
         case 0:
             yPos = "15vh";
@@ -54,6 +58,8 @@ function animate(obj){
         xPos = "110vw";
         endXPos = "-15vw";
     }
+
+    // Run Animation 
     activateQuestion(obj.getAttribute("qID"))
     return gsap.fromTo(obj, {y: yPos, x:xPos}, {x:endXPos, duration: 7.5, onCompleteParams:[obj] ,onComplete: endQuestion} );
 }
@@ -63,12 +69,13 @@ function endQuestion(obj){
     deactivateQuestion(obj.getAttribute("qID"))
 }
 
-function initialise(){
-    game = startGame(20); 
-    questions = game.questions;
-}
 
 function play(){
+    // Start Game, get questions
+    game = startGame(20); 
+    questions = game.questions;
+
+    // Initialise Each Question Object
     questionObjs = [];
     console.log(questions)
     for(questionData of questions){
@@ -76,11 +83,10 @@ function play(){
         questionData.level = level;
         questionObj = loadQuestion(questionData);
         questionObjects.push(questionObj);
-        }
     }
-    
-    
-function run(){
+
+
+    // Running Question Objects (Activating, Animating, and End Game Checking)
 
     runQuestions = setInterval(function(){
         try{
@@ -94,7 +100,5 @@ function run(){
     }, 2000)
 
 }
-
-initialise()
+    
 play()
-run()
