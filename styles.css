@@ -9,13 +9,24 @@ body{
   .questionObj {
     position: absolute  ;
     display: flex;
-    height: 10vw;
-    width: 10vw;
-    background-color: green;
+    height: 15vw;
+    width: 15vw;
+    max-height: 250px;
+    max-width: 250px;
+    background-image: url('assets/images/dartboard.svg') ;
+    background-size: contain;
     font-size: 3vh;
     align-items: center;
     text-align: center;
     justify-content: space-around;
+    
+  }
+  .questionObj p{
+    font-size: 2vw;
+    color: white;
+    background: black;
+    padding: 0.7vw;
+    border-radius: 10px;
   }
 
   .hiddenQuestionObj{

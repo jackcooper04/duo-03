@@ -20,7 +20,8 @@ function loadQuestion(question) {
     const newDiv = document.createElement("div");
     newDiv.className = "hiddenQuestionObj";
     // and give it some content
-    const newContent = document.createTextNode(question?.string);
+    const newContent = document.createElement("p");
+    newContent.textContent = question?.string;
     // add the text node to the newly created div
     newDiv.appendChild(newContent);
     // Add needed attributes to Div
@@ -101,13 +102,16 @@ function play(){
         }catch(e){
             // Checks if all questions have finished running and ends game
             if(questionDone == questionCount){
-                endGame();
                 clearInterval(runQuestions);
             }
         }
-        
     }, 2000)
 
+}
+
+function endRoutine(){
+    let endGameData = endGame();
+    
 }
 
 
