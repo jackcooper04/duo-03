@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const scoreSchema = mongoose.Schema({
-    initals:{type:String,required:true},
+    user:{type: mongoose.Schema.Types.ObjectId, ref: 'user'},
     score: {type:Number,required:true}
 
 

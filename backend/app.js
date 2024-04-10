@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 const scoreSchema = require('./models/score')
 const dotenv = require('dotenv');
 const score = require('./models/score');
+const user = require('./models/user');
 
 
 //Init DotENV
@@ -51,12 +52,28 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/add/hxv8HFX3hak-aep2pqh',async (req,res,next) => {
     var newScore = new score({
-        initals:req.body.init,
+        user:req.body.user,
         score:req.body.score
     })
     newScore.save();
     res.sendStatus(200);
 });
+
+app.get("/user/hxv8HFX3hak-aep2pqh",async (req,res,next) => {
+    var userID = Math.floor(Math.random()*(999-100+1)+100);
+    var valid = false;
+  
+        var newUser = new user({
+            number:userID,
+            name:userID
+        })
+        console.log(newUser)
+        const saved = await newUser.save()
+        res.json(saved)
+    
+ 
+   
+})
 
 app.get('/view/hxv8HFX3hak-aep2pqh', async (req,res,next) => {
     const scores = await score.find()
