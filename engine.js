@@ -5,7 +5,7 @@ const SERVER_DEVELOPEMENT_MODE = false;
 if (SERVER_DEVELOPEMENT_MODE) {
     var server_url = "http://localhost:4200/"
 } else {
-    var server_url = "http://ballisticbullseye.duckdns.org";
+    var server_url = "http://206.189.246.53";
 }
 
 var active_gameData = {};
