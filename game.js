@@ -126,4 +126,4 @@ function endRoutine(){
 }
 
 
-play()
+//play()

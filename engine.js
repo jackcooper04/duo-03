@@ -1,6 +1,15 @@
 const DEFAULT_POINT_VALUE = 5;
 const DEFAULT_GAME_TIME = 10000;
+const SERVER_DEVELOPEMENT_MODE = false;
+
+if (SERVER_DEVELOPEMENT_MODE) {
+    var server_url = "http://localhost:4200/"
+} else {
+    var server_url = "http://206.189.246.53";
+}
+
 var active_gameData = {};
+
 
 
 
@@ -49,7 +58,7 @@ function generateQuestions(questionCount, tables) {
             order = 1
         }
         var obj = {
-            id:makeid(10),
+            id: makeid(10),
             firstInt: firstInt,
             secondInt: secondInt,
             string: string,
@@ -71,7 +80,7 @@ function checkForActiveGames() {
 // Stores GameData to localstorage
 function storeGameData(questions) {
     //localStorage.setItem('gameData',CryptoJS.AES.encrypt(JSON.stringify(questions), "noanswersforyou"))
-    localStorage.setItem('gameData',JSON.stringify(questions));
+    localStorage.setItem('gameData', JSON.stringify(questions));
 
 }
 
@@ -104,11 +113,11 @@ function startGame(questionCount, tables, timeLimit) {
         if (!tables) {
             tables = []
         };
-        var questions = generateQuestions(questionCount,tables);       
+        var questions = generateQuestions(questionCount, tables);
         var gameData = {
-            timeAlloted:timeLimit || DEFAULT_GAME_TIME,
-            score:0,
-            questions:questions
+            timeAlloted: timeLimit || DEFAULT_GAME_TIME,
+            score: 0,
+            questions: questions
         };
         active_gameData = gameData;
         storeGameData(gameData);
@@ -119,19 +128,24 @@ function startGame(questionCount, tables, timeLimit) {
 function endGame() {
     // Check if game actually exis
     if (!checkForActiveGames()) {
+        console.log('no active')
         return false;
     };
     //Execute Kill Function
     var gameData = active_gameData;
-    localStorage.clear();
+    localStorage.removeItem("gameData")
     var correctAnswers = gameData.questions.map((elm, idx) => elm.correct == true ? idx : '').filter(String)
     console.log('END GAME');
     var actualScore = correctAnswers.length * DEFAULT_POINT_VALUE;
     var endGameObj = {
-        questions:gameData.questions,
-        score:actualScore,
+        questions: gameData.questions,
+        score: actualScore,
         correct: correctAnswers
-    }
+    };
+    findOrCreateUserId();
+    submitScore(endGameObj.score);
+
+    console.log(endGameObj)
     return endGameObj;
 };
 
@@ -187,7 +201,7 @@ var chord = -1;
 document.addEventListener("keypress", function onEvent(event) {
     if (chord == -1) {
         //Start new Chord
-        if (Number(event.key) || '0'){
+        if (Number(event.key) || '0') {
             chord = event.key;
             //trigger number event
             startChordDestruction();
@@ -203,10 +217,50 @@ document.addEventListener("keypress", function onEvent(event) {
 });
 
 function startChordDestruction() {
-    chordDestruction = setTimeout(function(){
+    chordDestruction = setTimeout(function () {
         console.log(Number(chord))
         receiveAnswer(chord);
         chord = -1;
         //trigger clear
-   }, 500);
-}
+    }, 500);
+};
+
+
+function findOrCreateUserId() {
+    // Possible Manual User Creation with name?? However for now going to default to a number based System (3 Digits)
+    var userID = localStorage.getItem("user");
+
+    if (!userID) {
+        console.log('no user!')
+        var settings = {
+            "url":  server_url+"user/hxv8HFX3hak-aep2pqh",
+            "method": "GET",
+            "timeout": 0,
+        };
+
+        $.ajax(settings).done(function (response) {
+            localStorage.setItem("user", response._id)
+            console.log(response);
+        });
+    }
+
+};
+
+function submitScore(score) {
+    var settings = {
+        "url": server_url+"add/hxv8HFX3hak-aep2pqh",
+        "method": "POST",
+        "timeout": 0,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "data": JSON.stringify({
+          "user": localStorage.getItem("user"),
+          "score": score
+        }),
+      };
+      
+      $.ajax(settings).done(function (response) {
+        console.log(response);
+      });
+};
