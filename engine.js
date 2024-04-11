@@ -1,6 +1,15 @@
 const DEFAULT_POINT_VALUE = 5;
 const DEFAULT_GAME_TIME = 10000;
+const SERVER_DEVELOPEMENT_MODE = true;
+
+if (SERVER_DEVELOPEMENT_MODE) {
+    var server_url = "http://localhost:4200/"
+} else {
+    var server_url = "http://ballisticbullseye.duckdns.org";
+}
+
 var active_gameData = {};
+
 
 
 
@@ -134,6 +143,7 @@ function endGame() {
         correct: correctAnswers
     };
     findOrCreateUserId();
+    submitScore(endGameObj.score);
 
     console.log(endGameObj)
     return endGameObj;
@@ -223,7 +233,7 @@ function findOrCreateUserId() {
     if (!userID) {
         console.log('no user!')
         var settings = {
-            "url": "http://localhost:4200/user/hxv8HFX3hak-aep2pqh",
+            "url":  server_url+"user/hxv8HFX3hak-aep2pqh",
             "method": "GET",
             "timeout": 0,
         };
@@ -234,9 +244,23 @@ function findOrCreateUserId() {
         });
     }
 
-}
+};
 
-startGame(5);
-setTimeout(function () {
-    endGame();
-}, 2000); 
+function submitScore(score) {
+    var settings = {
+        "url": server_url+"add/hxv8HFX3hak-aep2pqh",
+        "method": "POST",
+        "timeout": 0,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "data": JSON.stringify({
+          "user": localStorage.getItem("user"),
+          "score": score
+        }),
+      };
+      
+      $.ajax(settings).done(function (response) {
+        console.log(response);
+      });
+};
