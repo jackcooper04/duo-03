@@ -5,7 +5,9 @@ var questions;
 var questionCount = 5;
 var questionDone = 0;
 var questionObjects = [];
+var timeLeft = 30
 
+gsap.ticker.fps(120);
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
@@ -45,13 +47,13 @@ function animate(obj){
     // Set Rendered Level for Question
     switch(level){
         case 0:
-            yPos = "15vh";
+            yPos = "5vh";
             break;
         case 1:
-            yPos = "40vh";
+            yPos = "37.5vh";
             break;
         case 2:
-            yPos = "65vh";
+            yPos = "72.5vh";
             break;   
     }
     if(level == 1){
@@ -75,16 +77,17 @@ function endQuestion(obj){
 
 
 function play(){
-    
+    timeLeft= 30;
     // Start Game, get questions
     game = startGame(questionCount);
     questions = game.questions;
 
     // Initialise Each Question Object
-    questionObjs = [];
-    console.log(questions)
     for(questionData of questions){
-        level = getRandomInt(3)
+        if(window.innerHeight < 650){
+            level = getRandomInt(2)
+        }else level = getRandomInt(3)
+        
         questionData.level = level;
         questionObj = loadQuestion(questionData);
         questionObjects.push(questionObj);
@@ -92,6 +95,14 @@ function play(){
 
 
     // Running Question Objects (Activating, Animating, and End Game Checking)
+    timer = setInterval(function(){
+        timeLeft --;
+        if(timeLeft < 0){
+            clearInterval(timer);
+            return
+        }
+        document.getElementById('timerView').innerHTML = timeLeft;
+    }, 1000)
 
     runQuestions = setInterval(function(){
         try{
