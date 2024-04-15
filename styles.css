@@ -35,6 +35,24 @@ body{
   .hiddenQuestionObj{
     display: none;
   }
+  h1 {
+    font-family: sans-serif;
+  }
+
+#fname {
+  text-transform:uppercase
+}
+
+#scoreShow {
+  box-shadow: 0px 0px 40px 40px gray;
+  width: 50%;
+  background-color: lightgray;
+  margin: 1.5%;
+}
+
+#scoreBody {
+  background-color: darkgray;
+}
   
   .game-lines{
     display: flex;

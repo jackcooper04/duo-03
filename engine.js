@@ -1,11 +1,11 @@
 const DEFAULT_POINT_VALUE = 5;
 const DEFAULT_GAME_TIME = 10000;
-const SERVER_DEVELOPEMENT_MODE = false;
+const SERVER_DEVELOPEMENT_MODE = true;
 
 if (SERVER_DEVELOPEMENT_MODE) {
     var server_url = "http://localhost:4200/"
 } else {
-    var server_url = "http://206.189.246.53";
+    var server_url = "http://206.189.246.53/";
 }
 
 var active_gameData = {};
@@ -142,7 +142,6 @@ function endGame() {
         score: actualScore,
         correct: correctAnswers
     };
-    findOrCreateUserId();
     submitScore(endGameObj.score);
 
     console.log(endGameObj)
@@ -270,3 +269,8 @@ function submitScore(score) {
         console.log(response);
       });
 };
+
+
+
+
+findOrCreateUserId();
