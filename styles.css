@@ -1,5 +1,6 @@
 body{
   overflow: hidden;
+  background-image: url('./assets/images/brick-bg.png');
 }
 .game-container{
   display: flex;
@@ -7,22 +8,24 @@ body{
 }
   
   .questionObj {
-    position: absolute  ;
+    position: absolute;
     display: flex;
     height: 15vw;
     width: 15vw;
     max-height: 250px;
     max-width: 250px;
-    background-image: url('assets/images/dartboard.svg') ;
+    min-height: 100px;
+    min-width: 100px;
+    background-image: url('assets/images/dart-board.svg') ;
     background-size: contain;
-    font-size: 3vh;
+    font-size: medium;
     align-items: center;
     text-align: center;
     justify-content: space-around;
     
   }
   .questionObj p{
-    font-size: 2vw;
+    font-size: larger;
     color: white;
     background: black;
     padding: 0.7vw;
@@ -50,3 +53,45 @@ body{
 #scoreBody {
   background-color: darkgray;
 }
+  
+  .game-lines{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+  }
+  .game-line{
+    background-color: black;
+    width: 100%;
+    height: 2.5vh;
+    position: relative;
+    border-bottom: solid #c7c7c7 2.5px;
+    border-top: solid #c7c7c7 2.5px;
+  }
+  .bar-1{
+    top: 12.5vh;
+  }
+  .bar-2{
+    top: 42.5vh
+  }
+  .bar-3{
+    top: 75vh;
+  }
+
+  #timerView{
+    left: 50%;
+    position: absolute;
+    background-color: rgb(43, 42, 42);
+    border-radius: 10px;
+    padding: 10px;
+    height: min-content;
+    color: white;
+    margin: 0 auto;
+    border: solid 1px white
+  }
+
+  @media (max-height: 650px) {
+    .bar-3{
+      visibility: hidden;
+    }
+  }
