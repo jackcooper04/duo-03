@@ -44,9 +44,10 @@ body{
 }
 
 #scoreShow {
-  box-shadow: 0px 0px 40px 40px gray;
+  box-shadow: 0px 0px 20px 20px #2d283e;
+  background-color: #2d283e;
   width: 50%;
-  background-color: lightgray;
+  color: white;
   margin: 1.5%;
 }
 
