@@ -6,7 +6,7 @@ var questionCount = 5;
 var questionDone = 0;
 var questionObjects = [];
 var timeLeft = 30
-
+var inputValue = 0;
 gsap.ticker.fps(120);
 
 function getRandomInt(max) {
@@ -95,14 +95,35 @@ function play(){
 
 
     // Running Question Objects (Activating, Animating, and End Game Checking)
+    
+    // Visualise Input
+
+    inputCheck = setInterval(function(){
+        prevInput = inputValue;
+        inputValue = getCurrentInput()
+        if(prevInput!= inputValue){
+            if(inputValue == -1){
+                document.getElementById('inputValue').innerHTML = "--"
+            }else{
+                document.getElementById('inputValue').innerHTML = inputValue;
+            }
+        }
+        
+    }, 20)
+
+    // Timer
     timer = setInterval(function(){
         timeLeft --;
         if(timeLeft < 0){
+            endRoutine();
+            clearInterval(inputCheck);
             clearInterval(timer);
             return
         }
         document.getElementById('timerView').innerHTML = timeLeft;
     }, 1000)
+
+    // Create Game objects
 
     runQuestions = setInterval(function(){
         try{
@@ -122,8 +143,10 @@ function play(){
 
 function endRoutine(){
     let endGameData = endGame();
-    
+    console.log(endGameData);
+
+
 }
 
 
-//play()
+play()

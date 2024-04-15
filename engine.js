@@ -187,6 +187,7 @@ function receiveAnswer(number) {
     };
     storeGameData(active_gameData);
 };
+// Retrieve Current Input
 
 function addScore() {
     active_gameData.score = active_gameData.score + DEFAULT_POINT_VALUE;
@@ -198,6 +199,11 @@ function addScore() {
 
 console.log('Engine Activated');
 var chord = -1;
+
+function getCurrentInput() {
+    return chord
+}
+
 document.addEventListener("keypress", function onEvent(event) {
     if (chord == -1) {
         //Start new Chord
