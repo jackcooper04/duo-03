@@ -80,7 +80,9 @@ body{
   }
 
   #timerView{
-    left: 50%;
+    left: 50% ;
+    top: 2%;
+    transform: translate(-50%, -50%);
     position: absolute;
     background-color: rgb(43, 42, 42);
     border-radius: 10px;
@@ -89,6 +91,24 @@ body{
     color: white;
     margin: 0 auto;
     border: solid 1px white
+  }
+  #inputValue{
+    top: 70%;
+    left: 50%;
+    width: 10vw;
+    background: #1ac537;
+    border: 1px solid red;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    border-radius: 10px;
+    -webkit-text-fill-color: black;
+    -webkit-text-stroke: 2px rgb(255, 255, 255); /* width and color */
+    font-family:  monospace;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    font-weight: bold;
+    margin: 0 auto;
+    padding: 0.5vw;
   }
 
   @media (max-height: 650px) {
