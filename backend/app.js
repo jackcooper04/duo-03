@@ -62,10 +62,10 @@ app.post('/add/hxv8HFX3hak-aep2pqh',async (req,res,next) => {
 app.get("/user/hxv8HFX3hak-aep2pqh",async (req,res,next) => {
     var userID = Math.floor(Math.random()*(999-100+1)+100);
     var valid = false;
-  
         var newUser = new user({
             number:userID,
-            name:userID
+            name:userID,
+            shown:false
         })
         console.log(newUser)
         const saved = await newUser.save()
@@ -74,7 +74,23 @@ app.get("/user/hxv8HFX3hak-aep2pqh",async (req,res,next) => {
  
    
 })
+app.get('/grabUserDetails/hxv8HFX3hak-aep2pqh', async (req,res,next) => {
 
+    const foundUser = await user.findOne({_id:req.query.id});
+    const foundScores = await score.find({user:req.query.id});
+    const allScores = await score.find()
+    .populate('user')
+    res.json({user:foundUser,scores:foundScores,allScores:allScores})
+});
+
+app.get('/makeUserPublic/hxv8HFX3hak-aep2pqh', async (req,res,next) => {
+
+    const foundUser = await user.findOne({_id:req.query.id});
+    foundUser.name = req.query.name;
+    foundUser.shown = true;
+    const updatedUser = await user.findOneAndUpdate({_id:req.query.id},foundUser)
+    res.sendStatus(200);
+});
 app.get('/view/hxv8HFX3hak-aep2pqh', async (req,res,next) => {
     const scores = await score.find()
     .sort({score:-1})
