@@ -1,6 +1,6 @@
 const DEFAULT_POINT_VALUE = 5;
 const DEFAULT_GAME_TIME = 10000;
-const SERVER_DEVELOPEMENT_MODE = true;
+const SERVER_DEVELOPEMENT_MODE = false;
 
 if (SERVER_DEVELOPEMENT_MODE) {
     var server_url = "http://localhost:4200/"

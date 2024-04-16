@@ -1,4 +1,4 @@
-const SERVER_DEVELOPEMENT_MODE = true;
+const SERVER_DEVELOPEMENT_MODE = false;
 
 if (SERVER_DEVELOPEMENT_MODE) {
     var server_url = "http://localhost:4200/"
