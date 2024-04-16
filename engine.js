@@ -179,10 +179,11 @@ function receiveAnswer(number) {
     var indexes = active_gameData.questions.map((elm, idx) => elm.answer == number && elm.active ? idx : '').filter(String);
     for (idx in indexes) {
         // Prevent multiple "point redemptions"
+        endQuestion(active_gameData.questions[indexes[idx]].id);
         if (!active_gameData.questions[indexes[idx]].correct) {
             active_gameData.questions[indexes[idx]].correct = true;
             active_gameData.questions[indexes[idx]].active = false;
-            endQuestion(active_gameData.questions[indexes[idx]].id);
+            
             addScore();
         };
     };

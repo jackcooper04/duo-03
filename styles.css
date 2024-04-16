@@ -95,9 +95,10 @@ body{
   #inputValue{
     top: 70%;
     left: 50%;
-    width: 10vw;
-    overflow-x: scroll;
-    background: #1ac537;
+    min-width: 10vw;
+    max-width: 30vw;
+    overflow-x:auto;
+     background: #1ac537;
     border: 1px solid red;
     transform: translate(-50%, -50%);
     position: absolute;
