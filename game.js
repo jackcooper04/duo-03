@@ -61,17 +61,19 @@ function animate(obj){
         endXPos = "110vw";
     }else{
         xPos = "110vw";
-        endXPos = "-15vw";
+        endXPos = "-30vw";
     }
 
     // Run Animation 
     activateQuestion(obj.getAttribute("qID"))
-    return gsap.fromTo(obj, {y: yPos, x:xPos}, {x:endXPos, duration: 7.5, onCompleteParams:[obj] ,onComplete: endQuestion} );
+    return gsap.fromTo(obj, {y: yPos, x:xPos}, {x:endXPos, duration: 7.5, onCompleteParams:[obj.id] ,onComplete: endQuestion} );
 }
 
-function endQuestion(obj){
-    obj.className = "hiddenQuestionObj";
-    deactivateQuestion(obj.getAttribute("qID"))
+function endQuestion(objId){
+    console.log(objId)
+    gameObject = document.querySelector("[qID=]");
+    gameObject.className = "hiddenQuestionObj";
+    deactivateQuestion(objId)
     questionDone++;
 }
 
@@ -109,13 +111,12 @@ function play(){
             }
         }
         
-    }, 20)
+    }, 500)
 
     // Timer
     timer = setInterval(function(){
         timeLeft --;
         if(timeLeft < 0){
-            endRoutine();
             clearInterval(inputCheck);
             clearInterval(timer);
             return
@@ -141,12 +142,6 @@ function play(){
 
 }
 
-function endRoutine(){
-    let endGameData = endGame();
-    console.log(endGameData);
-
-
-}
 
 
 play()

@@ -96,6 +96,7 @@ body{
     top: 70%;
     left: 50%;
     width: 10vw;
+    overflow-x: scroll;
     background: #1ac537;
     border: 1px solid red;
     transform: translate(-50%, -50%);
