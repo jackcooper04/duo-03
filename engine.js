@@ -181,6 +181,7 @@ function receiveAnswer(number) {
         if (!active_gameData.questions[indexes[idx]].correct) {
             active_gameData.questions[indexes[idx]].correct = true;
             active_gameData.questions[indexes[idx]].active = false;
+            endQuestion(active_gameData.questions[indexes[idx]].id);
             addScore();
         };
     };
