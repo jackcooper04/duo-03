@@ -41,15 +41,51 @@ function logSubmit(event) {
         var userScores = response.scores;
         var latestScore = userScores[userScores.length -1].score;
         var highestScore = latestScore;
+        var allScores = response.allScores;
         for (idx in userScores) {
             if (userScores[idx].score > highestScore) {
                 highestScore = userScores[idx].score
             }
         };
 
+        var tbodyRef = document.getElementById('leaderboard').getElementsByTagName('tbody')[0];
+        for (idx in allScores) {
+            console.log(allScores[idx])
+            var newRow = tbodyRef.insertRow();
+
+            //New Row
+            var newName = document.createTextNode(allScores[idx].user.name);
+            var newScore = document.createTextNode(allScores[idx].score);
+            var newCellName = newRow.insertCell();
+            var newCellScore = newRow.insertCell();
+            newCellName.appendChild(newName);
+            newCellScore.appendChild(newScore);
+
+
+
+        }
+        // 
+
+        // // Insert a row at the end of table
+        // 
+        
+        // // Insert a cell at the end of the row
+        // 
+        // // Append a text node to the cell
+        // 
+        // newCell.appendChild(newText);
+        // var newCell = newRow.insertCell();
+        // // Append a text node to the cell
+        // var newText = document.createTextNode('new row');
+        // newCell.appendChild(newText);
+
+
+
         document.getElementById("currentScore").innerText = latestScore;
         document.getElementById("highScore").innerText = highestScore;
     });
-}
+};
+
+
 
 aquireData();
