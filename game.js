@@ -65,13 +65,14 @@ function animate(obj){
     }
 
     // Run Animation 
-    activateQuestion(obj.getAttribute("qID"))
-    return gsap.fromTo(obj, {y: yPos, x:xPos}, {x:endXPos, duration: 7.5, onCompleteParams:[obj.id] ,onComplete: endQuestion} );
+    questionID = obj.getAttribute("qID")
+    activateQuestion(questionID);
+    return gsap.fromTo(obj, {y: yPos, x:xPos}, {x:endXPos, duration: 7.5, onCompleteParams:[questionID] ,onComplete: endQuestion} );
 }
 
 function endQuestion(objId){
-    console.log(objId)
-    gameObject = document.querySelector("[qID=]");
+    gameObject = document.querySelector("[qID='" + objId + "']");
+    console.log(gameObject)
     gameObject.className = "hiddenQuestionObj";
     deactivateQuestion(objId)
     questionDone++;
