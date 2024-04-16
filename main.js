@@ -37,11 +37,16 @@ function logSubmit(event) {
     
     $.ajax(settings).done(function (response) {
         console.log(response)
-
+        var userRegistered = response.user.shown;
         var userScores = response.scores;
         var latestScore = userScores[userScores.length -1].score;
         var highestScore = latestScore;
         var allScores = response.allScores;
+
+        if (userRegistered) {
+            const element = document.getElementById("enterName");
+            element.remove();
+        }
         for (idx in userScores) {
             if (userScores[idx].score > highestScore) {
                 highestScore = userScores[idx].score
