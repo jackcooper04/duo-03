@@ -144,7 +144,8 @@ function endGame() {
     };
     submitScore(endGameObj.score);
 
-    console.log(endGameObj)
+    console.log(endGameObj);
+    window.location.replace("/gameEnd.html");
     return endGameObj;
 };
 
