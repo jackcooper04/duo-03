@@ -116,3 +116,9 @@ body{
       visibility: hidden;
     }
   }
+
+
+  /* End Game Modal */
+.gameEnd-modal{
+  position: absolute;
+}
