@@ -72,7 +72,6 @@ function animate(obj){
 
 function endQuestion(objId){
     gameObject = document.querySelector("[qID='" + objId + "']");
-    console.log(gameObject)
     gameObject.className = "hiddenQuestionObj";
     deactivateQuestion(objId)
     questionDone++;
