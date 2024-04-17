@@ -145,9 +145,10 @@ async function endGame() {
         questions: gameData.questions,
         score: actualScore,
         timeTaken:timeTaken,
+        shotsTaken:gameData.shotsTaken,
         correct: correctAnswers
     };
-    const submittedScore = await submitScore(endGameObj.score);
+    const submittedScore = await submitScore(endGameObj.score,endGameObj.shotsTaken,endGameObj.timeTaken);
 
     console.log(endGameObj);
     window.location.replace("/gameEnd.html");
@@ -260,7 +261,7 @@ function findOrCreateUserId() {
 
 };
 
-async function submitScore(score) {
+async function submitScore(score,shot,time) {
     var settings = {
         "url": server_url+"add/hxv8HFX3hak-aep2pqh",
         "method": "POST",
@@ -270,7 +271,9 @@ async function submitScore(score) {
         },
         "data": JSON.stringify({
           "user": localStorage.getItem("user"),
-          "score": score
+          "score": score,
+          "time":time,
+          "taken":shot
         }),
       };
       

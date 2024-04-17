@@ -54,8 +54,8 @@ app.post('/add/hxv8HFX3hak-aep2pqh',async (req,res,next) => {
     var newScore = new score({
         user:req.body.user,
         score:req.body.score,
-        timeTaken: req.body.time,
-        shotsTaken : req.body.taken
+        timeTaken: Number(req.body.time),
+        shotsTaken : Number(req.body.taken)
     })
     newScore.save();
     res.sendStatus(200);
