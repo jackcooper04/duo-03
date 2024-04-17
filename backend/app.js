@@ -84,7 +84,6 @@ app.get('/grabUserDetails/hxv8HFX3hak-aep2pqh', async (req,res,next) => {
     .sort({score:-1})
     .populate({
         path:'user',
-        match : {shown:true}
     })
     res.json({user:foundUser,scores:foundScores,allScores:allScores})
 });
