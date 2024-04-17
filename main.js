@@ -95,6 +95,8 @@ function logSubmit(event) {
     });
 };
 
-
+function playAgain(){
+    window.location.replace("/index.html");
+}
 
 aquireData();

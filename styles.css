@@ -129,6 +129,18 @@ body{
     margin: 0 auto;
     padding: 0.5vw;
   }
+  
+  .playAgain{
+      margin-top: 5%;
+      background-color: #2d283e;
+      border-radius: 10px;
+      box-shadow: 10px 10px 10px black;
+      width: fit-content;
+      padding: 2.5%;
+      color: white;
+      margin: auto;
+      text-align: center;
+    }
 
   @media (max-height: 650px) {
     .bar-3{
