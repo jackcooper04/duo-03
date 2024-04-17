@@ -53,7 +53,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/add/hxv8HFX3hak-aep2pqh',async (req,res,next) => {
     var newScore = new score({
         user:req.body.user,
-        score:req.body.score
+        score:req.body.score,
+        timeTaken: req.body.time,
+        shotsTaken : req.body.taken
     })
     newScore.save();
     res.sendStatus(200);
