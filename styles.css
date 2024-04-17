@@ -96,6 +96,19 @@ body{
     margin: 0 auto;
     border: solid 1px white
   }
+  #scoreView{
+    left: 30% ;
+    top: 2%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    background-color: rgb(43, 42, 42);
+    border-radius: 10px;
+    padding: 10px;
+    height: min-content;
+    color: white;
+    margin: 0 auto;
+    border: solid 1px white
+  }
   #inputValue{
     top: 70%;
     left: 50%;

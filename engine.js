@@ -117,6 +117,9 @@ function startGame(questionCount, tables, timeLimit) {
         var gameData = {
             timeAlloted: timeLimit || DEFAULT_GAME_TIME,
             score: 0,
+            timeStarted:Date.now(),
+            timeEnded:undefined,
+            shotsTaken:0,
             questions: questions
         };
         active_gameData = gameData;
@@ -137,12 +140,15 @@ async function endGame() {
     var correctAnswers = gameData.questions.map((elm, idx) => elm.correct == true ? idx : '').filter(String)
     console.log('END GAME');
     var actualScore = correctAnswers.length * DEFAULT_POINT_VALUE;
+    var timeTaken = Date.now() - gameData.timeStarted;
     var endGameObj = {
         questions: gameData.questions,
         score: actualScore,
+        timeTaken:timeTaken,
+        shotsTaken:gameData.shotsTaken,
         correct: correctAnswers
     };
-    const submittedScore = await submitScore(endGameObj.score);
+    const submittedScore = await submitScore(endGameObj.score,endGameObj.shotsTaken,endGameObj.timeTaken);
 
     console.log(endGameObj);
     window.location.replace("/gameEnd.html");
@@ -193,6 +199,7 @@ function receiveAnswer(number) {
 
 function addScore() {
     active_gameData.score = active_gameData.score + DEFAULT_POINT_VALUE;
+    document.getElementById("scoreView").innerHTML = active_gameData.score;
     storeGameData(active_gameData);
     // Trigger Score Update
 };
@@ -254,7 +261,7 @@ function findOrCreateUserId() {
 
 };
 
-async function submitScore(score) {
+async function submitScore(score,shot,time) {
     var settings = {
         "url": server_url+"add/hxv8HFX3hak-aep2pqh",
         "method": "POST",
@@ -264,7 +271,9 @@ async function submitScore(score) {
         },
         "data": JSON.stringify({
           "user": localStorage.getItem("user"),
-          "score": score
+          "score": score,
+          "time":time,
+          "taken":shot
         }),
       };
       
