@@ -193,6 +193,7 @@ function receiveAnswer(number) {
 
 function addScore() {
     active_gameData.score = active_gameData.score + DEFAULT_POINT_VALUE;
+    document.getElementById("scoreView").innerHTML = active_gameData.score;
     storeGameData(active_gameData);
     // Trigger Score Update
 };
