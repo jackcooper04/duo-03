@@ -125,7 +125,7 @@ function startGame(questionCount, tables, timeLimit) {
     }
 };
 
-function endGame() {
+async function endGame() {
     // Check if game actually exis
     if (!checkForActiveGames()) {
         console.log('no active')
@@ -142,7 +142,7 @@ function endGame() {
         score: actualScore,
         correct: correctAnswers
     };
-    submitScore(endGameObj.score);
+    const submittedScore = await submitScore(endGameObj.score);
 
     console.log(endGameObj);
     window.location.replace("/gameEnd.html");
@@ -254,7 +254,7 @@ function findOrCreateUserId() {
 
 };
 
-function submitScore(score) {
+async function submitScore(score) {
     var settings = {
         "url": server_url+"add/hxv8HFX3hak-aep2pqh",
         "method": "POST",
