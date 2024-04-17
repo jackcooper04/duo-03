@@ -72,9 +72,14 @@ function animate(obj){
 
 function endQuestion(objId){
     gameObject = document.querySelector("[qID='" + objId + "']");
-    gameObject.className = "hiddenQuestionObj";
-    deactivateQuestion(objId)
-    questionDone++;
+    if(gameObject.className == "questionObj"){
+        gameObject.className = "hiddenQuestionObj";
+        deactivateQuestion(objId)
+        questionDone++;
+    }
+    if(questionDone == questionCount){
+        endRoutine();
+    }
 }
 
 
@@ -119,6 +124,7 @@ function play(){
         if(timeLeft < 0){
             clearInterval(inputCheck);
             clearInterval(timer);
+            endRoutine();
             return
         }
         document.getElementById('timerView').innerHTML = timeLeft;
@@ -141,6 +147,13 @@ function play(){
     }, 2000)
 
 }
+
+function endRoutine(){
+    clearInterval(inputCheck);
+    clearInterval(timer);
+    console.log(endGame());
+}
+
 
 
 
