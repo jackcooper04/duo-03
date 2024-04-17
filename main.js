@@ -67,6 +67,10 @@ function logSubmit(event) {
             newCellScore.appendChild(newScore);
 
 
+            // newCellName.appendChild(newTaken);
+            // newCellScore.appendChild(newShot);
+
+
 
         }
         // 

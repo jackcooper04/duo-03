@@ -12,10 +12,12 @@
         <h3>Select a difficulty in which to play!</h3>
         <p>The difficulty will change the amount of questions will be displayed.</p>
         <div class="game-selector-buttons">
-            <button id="easy">Easy</button>
-            <button id="medium">Medium</button>
-            <button id="hard">Hard</button>
+            <button id="easy" onmouseover="showInfo('You will have 10 questions and 30 second timer')" onclick="openGame(10,30)">Easy</button>
+            <button id="medium" onmouseover="showInfo('You will have 20 questions and 60 second timer')" onclick="openGame(20,60)">Medium</button>
+            <button id="hard" onmouseover="showInfo('You will have 30 questions and 120 second timer')" onclick="openGame(30, 120)">Hard</button>
         </div>
+        <p><span id="difficultyInfo">Hover over a difficulty, and see Information about it!</span></p>
     </div>
 </body>
+<script src="selector.js"></script>
 </html>

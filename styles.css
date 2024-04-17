@@ -44,11 +44,15 @@ body{
 }
 
 #scoreShow {
-  box-shadow: 0px 0px 20px 20px #2d283e;
-  background-color: #2d283e;
   width: 50%;
-  color: white;
-  margin: 1.5%;
+    margin: 1.5%;
+    background-color: #2d283e;
+    border-radius: 10px;
+    box-shadow: 10px 10px 10px black;
+    padding: 2.5%;
+    color: white;
+    text-align: center;
+    margin: auto;
 }
 
 #scoreBody {
@@ -146,8 +150,11 @@ body{
   width: fit-content;
   padding: 2.5%;
   color: white;
-  margin: auto;
   text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .game-selector-buttons{

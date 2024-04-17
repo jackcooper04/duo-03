@@ -2,10 +2,10 @@
 const container = document.getElementById('gameContainer');
 var game;
 var questions;
-var questionCount = 5;
+var questionCount = null;
 var questionDone = 0;
 var questionObjects = [];
-var timeLeft = 30
+var timeLeft = null;
 var inputValue = 0;
 gsap.ticker.fps(120);
 
@@ -82,9 +82,18 @@ function endQuestion(objId){
     }
 }
 
+function checkValid(time, count){
+    if(time== false || count == false){
+        window.location.replace("/index.html");
+    }
+}
+
 
 function play(){
-    timeLeft= 30;
+    timeLeft = localStorage.getItem("time") || false;
+    questionCount = localStorage.getItem("count") || false;
+    checkValid(timeLeft, questionCount);
+
     // Start Game, get questions
     game = startGame(questionCount);
     questions = game.questions;
@@ -149,6 +158,8 @@ function play(){
 }
 
 function endRoutine(){
+    localStorage.removeItem("time");
+    localStorage.removeItem("count")
     clearInterval(inputCheck);
     clearInterval(timer);
     console.log(endGame());
