@@ -138,3 +138,40 @@ body{
     padding: 8px;
   }
   
+/* Home page Styling */
+.game-selector-panel{
+  background-color: #2d283e;
+  border-radius: 10px;
+  box-shadow: 10px 10px 10px black;
+  width: fit-content;
+  padding: 2.5%;
+  color: white;
+  margin: auto;
+  text-align: center;
+}
+
+.game-selector-buttons{
+  display: flex;
+  justify-content: space-around;
+}
+.game-selector-buttons button{
+  background-color: #2d283e;
+  border-radius: 10px;
+  box-shadow: 10px 10px 10px black;
+  width: fit-content;
+  padding: 2.5%;
+  color: white;
+  margin: auto;
+  text-align: center;
+}
+.game-selector-buttons button, #easy{
+  background-color: #1ac537;
+}
+
+.game-selector-buttons button, #medium{
+  background-color: rgb(255, 196, 0);
+}
+
+.game-selector-buttons button, #hard{
+  background-color: rgb(255, 0, 0);
+}
