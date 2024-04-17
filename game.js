@@ -121,7 +121,7 @@ function play(){
             if(inputValue == -1){
                 document.getElementById('inputValue').innerHTML = "--"
             }else{
-                document.getElementById('inputValue').innerHTML = inputValue;
+                document.getElementById('inputValue').innerHTML = Number(inputValue);
             }
         }
         

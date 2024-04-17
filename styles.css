@@ -2,6 +2,9 @@ body{
   overflow: hidden;
   background-image: url('./assets/images/brick-bg.png');
 }
+.showOverflow{
+  overflow-y: auto;
+}
 .game-container{
   display: flex;
   overflow: hidden;
@@ -131,14 +134,15 @@ body{
   }
   
   .playAgain{
-      margin-top: 5%;
-      background-color: #2d283e;
+      
+      background-color: #06b800;
       border-radius: 10px;
       box-shadow: 10px 10px 10px black;
       width: fit-content;
       padding: 2.5%;
       color: white;
       margin: auto;
+      margin-top: 5%;
       text-align: center;
     }
 
