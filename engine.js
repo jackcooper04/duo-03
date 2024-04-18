@@ -1,12 +1,36 @@
 const DEFAULT_POINT_VALUE = 5;
 const DEFAULT_GAME_TIME = 10000;
 const SERVER_DEVELOPEMENT_MODE = false;
-
+var ONLINE_MODE = true;
+localStorage.setItem("online",true);
 if (SERVER_DEVELOPEMENT_MODE) {
     var server_url = "http://localhost:4200/"
 } else {
     var server_url = "http://206.189.246.53/";
-}
+};
+var settings = {
+    "url": server_url + "ping",
+    "method": "GET",
+    "timeout": 0,
+};
+
+$.ajax(settings).done(function (response) {
+
+    console.log(response);
+
+})
+    .fail(function (jqXHR, textStatus, errorThrown) {
+        console.log('Failed to Connect to Server');
+        ONLINE_MODE = false;
+        localStorage.setItem("online",false);
+        // Request failed. Show error message to user. 
+        // errorThrown has error message.
+    })
+
+
+
+
+
 
 var active_gameData = {};
 
@@ -117,9 +141,9 @@ function startGame(questionCount, tables, timeLimit) {
         var gameData = {
             timeAlloted: timeLimit || DEFAULT_GAME_TIME,
             score: 0,
-            timeStarted:Date.now(),
-            timeEnded:undefined,
-            shotsTaken:0,
+            timeStarted: Date.now(),
+            timeEnded: undefined,
+            shotsTaken: 0,
             questions: questions
         };
         active_gameData = gameData;
@@ -144,14 +168,14 @@ async function endGame() {
     var endGameObj = {
         questions: gameData.questions,
         score: actualScore,
-        timeTaken:timeTaken,
-        shotsTaken:gameData.shotsTaken,
+        timeTaken: timeTaken,
+        shotsTaken: gameData.shotsTaken,
         correct: correctAnswers
     };
-    const submittedScore = await submitScore(endGameObj.score,endGameObj.shotsTaken,endGameObj.timeTaken);
+    const submittedScore = await submitScore(endGameObj.score, endGameObj.shotsTaken, endGameObj.timeTaken);
 
     console.log(endGameObj);
-    window.location.replace("/gameEnd.html");
+
     return endGameObj;
 };
 
@@ -183,13 +207,15 @@ function deactivateQuestion(id) {
 
 function receiveAnswer(number) {
     var indexes = active_gameData.questions.map((elm, idx) => elm.answer == number && elm.active ? idx : '').filter(String);
+    console.log(active_gameData.shotsTaken)
+    active_gameData.shotsTaken = active_gameData.shotsTaken + 1;
     for (idx in indexes) {
         // Prevent multiple "point redemptions"
         endQuestion(active_gameData.questions[indexes[idx]].id);
         if (!active_gameData.questions[indexes[idx]].correct) {
             active_gameData.questions[indexes[idx]].correct = true;
             active_gameData.questions[indexes[idx]].active = false;
-            
+
             addScore();
         };
     };
@@ -245,10 +271,10 @@ function findOrCreateUserId() {
     // Possible Manual User Creation with name?? However for now going to default to a number based System (3 Digits)
     var userID = localStorage.getItem("user");
 
-    if (!userID) {
+    if (!userID && ONLINE_MODE) {
         console.log('no user!')
         var settings = {
-            "url":  server_url+"user/hxv8HFX3hak-aep2pqh",
+            "url": server_url + "user/hxv8HFX3hak-aep2pqh",
             "method": "GET",
             "timeout": 0,
         };
@@ -257,29 +283,48 @@ function findOrCreateUserId() {
             localStorage.setItem("user", response._id)
             console.log(response);
         });
-    }
+    };
 
 };
 
-async function submitScore(score,shot,time) {
+async function submitScore(score, shot, time) {
+
     var settings = {
-        "url": server_url+"add/hxv8HFX3hak-aep2pqh",
+        "url": server_url + "add/hxv8HFX3hak-aep2pqh",
         "method": "POST",
         "timeout": 0,
         "headers": {
-          "Content-Type": "application/json"
+            "Content-Type": "application/json"
         },
         "data": JSON.stringify({
-          "user": localStorage.getItem("user"),
-          "score": score,
-          "time":time,
-          "taken":shot
+            "user": localStorage.getItem("user"),
+            "score": score,
+            "time": time,
+            "taken": shot
         }),
-      };
-      
-      $.ajax(settings).done(function (response) {
-        console.log(response);
-      });
+    };
+
+
+    if (ONLINE_MODE) {
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            window.location.replace("/gameEnd.html");
+        });
+    } else {
+        if (localStorage.getItem("score")) {
+            if (score > localStorage.getItem("score")) {
+                localStorage.setItem("high_score",score)
+            };
+            localStorage.setItem("score",score);
+        } else {
+            localStorage.setItem("score",score);
+            localStorage.setItem("high_score",score)
+        };
+        localStorage.setItem("time_taken",time);
+        localStorage.setItem("shots_taken",shot);
+        window.location.replace("/gameEnd.html");
+
+    }
 };
 
 

@@ -1,5 +1,5 @@
 body{
-  overflow: hidden;
+  /* overflow: hidden; */
   background-image: url('./assets/images/brick-bg.png');
 }
 .showOverflow{

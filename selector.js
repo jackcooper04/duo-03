@@ -13,3 +13,8 @@ async function openGame(count, time){
     setTimer = await localStorage.setItem("time", time);
     window.location.replace("/game.html");
 }
+
+function clearUser(){
+    alert("user cleared")
+    localStorage.removeItem("user");
+}
