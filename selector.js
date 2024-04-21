@@ -11,7 +11,7 @@ async function openGame(count, time){
 
     setCount = await localStorage.setItem("count", count);
     setTimer = await localStorage.setItem("time", time);
-    window.location.replace("/game.html");
+    window.location.href = "game.html";
 }
 
 function clearUser(){

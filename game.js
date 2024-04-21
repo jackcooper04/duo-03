@@ -84,7 +84,7 @@ function endQuestion(objId){
 
 function checkValid(time, count){
     if(time== false || count == false){
-        window.location.replace("/index.html");
+        window.location.href = "index.html";
     }
 }
 

@@ -128,7 +128,7 @@ function aquireData() {
 };
 
 function playAgain(){
-    window.location.replace("/index.html");
+    window.location.href = "index.html";
 }
 
 aquireData();

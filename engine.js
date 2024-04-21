@@ -308,7 +308,7 @@ async function submitScore(score, shot, time) {
     if (ONLINE_MODE) {
         $.ajax(settings).done(function (response) {
             console.log(response);
-            window.location.replace("/gameEnd.html");
+            window.location.href = "gameEnd.html";
         });
     } else {
         if (localStorage.getItem("score")) {
@@ -322,7 +322,7 @@ async function submitScore(score, shot, time) {
         };
         localStorage.setItem("time_taken",time);
         localStorage.setItem("shots_taken",shot);
-        window.location.replace("/gameEnd.html");
+        window.location.href = "gameEnd.html";
 
     }
 };
