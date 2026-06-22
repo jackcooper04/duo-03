@@ -29,102 +29,58 @@ form.addEventListener('submit', logSubmit);
 
 
 function aquireData() {
+    const params = new URLSearchParams(window.location.search);
+    const score = params.get("score") ?? localStorage.getItem("score") ?? 0;
+    const highScore = params.get("high") ?? localStorage.getItem("high_score") ?? 0;
+    const shots = params.get("shots") ?? localStorage.getItem("shots_taken") ?? 0;
+    const timeSecs = Math.floor((params.get("time") ?? localStorage.getItem("time_taken") ?? 0) / 1000);
+
+    document.getElementById("currentScore").innerText = score;
+    document.getElementById("highScore").innerText = highScore;
+    document.getElementById("shotsTaken").innerText = shots;
+    document.getElementById("timeTaken").innerText = timeSecs + " Seconds";
+
     if (localStorage.getItem("online") == "true") {
-      
         var settings = {
             "url": server_url + "grabUserDetails/hxv8HFX3hak-aep2pqh?id=" + localStorage.getItem("user"),
             "method": "GET",
             "timeout": 0,
         };
-    
+
         $.ajax(settings).done(function (response) {
-            console.log(response)
-            var userRegistered = response.user.shown;
-            var userScores = response.scores;
-            if (userScores.length > 1) {
-                var latestScore = userScores[userScores.length - 1].score;
-            } else {
-                var latestScore = userScores[0].score;
-            }
-           
-            var shotsTaken = userScores[userScores.length - 1].shotsTaken;
-            var timeTaken = Math.floor(userScores[userScores.length - 1].timeTaken / 1000) + " Seconds";
-            var highestScore = latestScore;
-            var allScores = response.allScores;
-    
+            var userRegistered = response.user && response.user.shown;
             if (userRegistered) {
-                const element = document.getElementById("enterName");
-                element.remove();
+                const el = document.getElementById("enterName");
+                if (el) el.remove();
             }
-            for (idx in userScores) {
-                if (userScores[idx].score > highestScore) {
-                    highestScore = userScores[idx].score
-                }
-            };
-    
+
+            var allScores = response.allScores;
             var tbodyRef = document.getElementById('leaderboard').getElementsByTagName('tbody')[0];
             for (idx in allScores) {
-                if (allScores[idx].user.shown) {
-                    console.log(allScores[idx])
+                if (allScores[idx].user && allScores[idx].user.shown) {
                     var newRow = tbodyRef.insertRow();
-                    var flooredValue = Math.floor(allScores[idx].timeTaken / 1000);
-                    //New Row
-                    var newName = document.createTextNode(allScores[idx].user.name);
-                    var newScore = document.createTextNode(allScores[idx].score);
-                    var newTaken = document.createTextNode(allScores[idx].shotsTaken);
-                    var newTime = document.createTextNode(flooredValue);
                     var newCellName = newRow.insertCell();
                     var newCellScore = newRow.insertCell();
                     var newCellTaken = newRow.insertCell();
                     var newCellTime = newRow.insertCell();
-    
-    
-                    newCellName.appendChild(newName);
-                    newCellScore.appendChild(newScore);
-                    newCellTaken.appendChild(newTaken);
-                    newCellTime.appendChild(newTime);
+                    newCellName.appendChild(document.createTextNode(allScores[idx].user.name));
+                    newCellScore.appendChild(document.createTextNode(allScores[idx].score));
+                    newCellTaken.appendChild(document.createTextNode(allScores[idx].shotsTaken));
+                    newCellTime.appendChild(document.createTextNode(Math.floor(allScores[idx].timeTaken / 1000)));
                 }
-    
-    
-    
-    
             }
-            // 
-    
-            // // Insert a row at the end of table
-            // 
-    
-            // // Insert a cell at the end of the row
-            // 
-            // // Append a text node to the cell
-            // 
-            // newCell.appendChild(newText);
-            // var newCell = newRow.insertCell();
-            // // Append a text node to the cell
-            // var newText = document.createTextNode('new row');
-            // newCell.appendChild(newText);
-    
-    
-    
-            document.getElementById("currentScore").innerText = latestScore;
-            document.getElementById("highScore").innerText = highestScore;
-            document.getElementById("shotsTaken").innerText = shotsTaken;
-            document.getElementById("timeTaken").innerText = timeTaken;
+        }).fail(function () {
+            const el = document.getElementById("removeMe");
+            if (el) el.remove();
+            const el2 = document.getElementById("enterName");
+            if (el2) el2.remove();
         });
     } else {
-        console.log('lmso')
-        const element = document.getElementById("removeMe");
-        element.remove();
-        const element2 = document.getElementById("enterName");
-        element2.remove();
-        var timeTaken = Math.floor(localStorage.getItem("time_taken") / 1000) + " Seconds";
-        console.log(localStorage.getItem("time_taken"))
-        document.getElementById("currentScore").innerText = localStorage.getItem("score")
-        document.getElementById("highScore").innerText = localStorage.getItem("high_score");
-        document.getElementById("shotsTaken").innerText = localStorage.getItem("shots_taken");
-        document.getElementById("timeTaken").innerText = timeTaken;
+        const el = document.getElementById("removeMe");
+        if (el) el.remove();
+        const el2 = document.getElementById("enterName");
+        if (el2) el2.remove();
     }
- 
 };
 
 function playAgain(){

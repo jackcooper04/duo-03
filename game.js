@@ -85,14 +85,17 @@ function endQuestion(objId){
 function checkValid(time, count){
     if(time== false || count == false){
         window.location.href = "index.html";
+        return false;
     }
+    return true;
 }
 
 
 function play(){
-    timeLeft = localStorage.getItem("time") || false;
-    questionCount = localStorage.getItem("count") || false;
-    checkValid(timeLeft, questionCount);
+    const params = new URLSearchParams(window.location.search);
+    timeLeft = Number(params.get("time")) || Number(localStorage.getItem("time")) || false;
+    questionCount = Number(params.get("count")) || Number(localStorage.getItem("count")) || false;
+    if (!checkValid(timeLeft, questionCount)) return;
 
     // Start Game, get questions
     game = startGame(questionCount);

@@ -57,7 +57,7 @@ app.post('/add/hxv8HFX3hak-aep2pqh',async (req,res,next) => {
         timeTaken: Number(req.body.time),
         shotsTaken : Number(req.body.taken)
     })
-    newScore.save();
+    await newScore.save();
     res.sendStatus(200);
 });
 
@@ -103,9 +103,8 @@ app.get('/view/hxv8HFX3hak-aep2pqh', async (req,res,next) => {
 })
 
 
-app.get('/ping', async (req, res, next) => {
-  
-    res.send(200);
+app.get('/ping', (req, res) => {
+    res.sendStatus(200);
 });
 
 module.exports = app;

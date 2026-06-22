@@ -1,6 +1,6 @@
 const DEFAULT_POINT_VALUE = 5;
 const DEFAULT_GAME_TIME = 10000;
-const SERVER_DEVELOPEMENT_MODE = false;
+const SERVER_DEVELOPEMENT_MODE = true;
 var ONLINE_MODE = true;
 localStorage.setItem("online",true);
 if (SERVER_DEVELOPEMENT_MODE) {
@@ -8,6 +8,7 @@ if (SERVER_DEVELOPEMENT_MODE) {
 } else {
     var server_url = "http://206.189.246.53/";
 };
+console.log('ping')
 var settings = {
     "url": server_url + "ping",
     "method": "GET",
@@ -288,42 +289,32 @@ function findOrCreateUserId() {
 };
 
 async function submitScore(score, shot, time) {
+    const prevHigh = Number(localStorage.getItem("high_score")) || 0;
+    const newHigh = score > prevHigh ? score : prevHigh;
+    localStorage.setItem("high_score", newHigh);
 
-    var settings = {
-        "url": server_url + "add/hxv8HFX3hak-aep2pqh",
-        "method": "POST",
-        "timeout": 0,
-        "headers": {
-            "Content-Type": "application/json"
-        },
-        "data": JSON.stringify({
-            "user": localStorage.getItem("user"),
-            "score": score,
-            "time": time,
-            "taken": shot
-        }),
-    };
-
+    const endUrl = "gameEnd.html?score=" + score + "&shots=" + shot + "&time=" + time + "&high=" + newHigh;
 
     if (ONLINE_MODE) {
-        $.ajax(settings).done(function (response) {
-            console.log(response);
-            window.location.href = "gameEnd.html";
+        var settings = {
+            "url": server_url + "add/hxv8HFX3hak-aep2pqh",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "data": JSON.stringify({
+                "user": localStorage.getItem("user"),
+                "score": score,
+                "time": time,
+                "taken": shot
+            }),
+        };
+        $.ajax(settings).always(function () {
+            window.location.href = endUrl;
         });
     } else {
-        if (localStorage.getItem("score")) {
-            if (score > localStorage.getItem("score")) {
-                localStorage.setItem("high_score",score)
-            };
-            localStorage.setItem("score",score);
-        } else {
-            localStorage.setItem("score",score);
-            localStorage.setItem("high_score",score)
-        };
-        localStorage.setItem("time_taken",time);
-        localStorage.setItem("shots_taken",shot);
-        window.location.href = "gameEnd.html";
-
+        window.location.href = endUrl;
     }
 };
 

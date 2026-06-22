@@ -7,11 +7,9 @@ function showInfo(text){
     }
 }
 
-async function openGame(count, time){
-
-    setCount = await localStorage.setItem("count", count);
-    setTimer = await localStorage.setItem("time", time);
-    window.location.href = "game.html";
+function openGame(count, time){
+    localStorage.removeItem('gameData');
+    window.location.href = "game.html?count=" + count + "&time=" + time;
 }
 
 function clearUser(){
